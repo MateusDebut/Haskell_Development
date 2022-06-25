@@ -5,11 +5,12 @@ data ArvoreBinaria valor = NodeVazio | Node valor (ArvoreBinaria valor)  (Arvore
 
 main = do
     let b = NodeVazio
-    let b1 = Node 5 NodeVazio b
-    let b2 = Node 10 b1 NodeVazio
+    let b1 = adicionaElementoEmArvore b 5 
+    let b2 = adicionaElementoEmArvore b1 10
 
     putStrLn $ show b2
     putStrLn $ show $ buscaEmArvore b2 7
+    
 
 f :: (Ord valor) => valor -> valor -> Integer
 f x y = if x > y
