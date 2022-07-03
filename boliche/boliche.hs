@@ -1,9 +1,5 @@
 --Desenvolvido por Mateus dos Santos Ribeiro - N°USP: 11796997
 
---Está dando erro na extração do bonus do Strike. O algoritmo só está considerando
---O 1º bonus e não está considerando o segundo. Preciso fazer um Slice e pegar um array com os 4 elementos
---Após o strike
-
 main = do
     print $  calculaPontos listaDePontos
     print $ sum $ calculaPontos listaDePontos
