@@ -1,15 +1,15 @@
 --Desenvolvido por Mateus dos Santos Ribeiro - N°USP: 11796997
 
 main = do
-    print $  calculaPontos listaDePontos
+    print $ imprimePontosPorRodada listaDePontos 
     print $ sum $ calculaPontos listaDePontos
 
 
-listaDePontos = [10,10,10,10,10,10,10,10,10,10,10,10]
+listaDePontos = [1,4,4,5,6,4,5,5,10,0,1,7,3,6,4,10,2,8,6]
 
 verificaSpare :: Int -> [Int] -> Bool
-verificaSpare a [] = False
-verificaSpare a (h:t) = if a + h == 10
+verificaSpare elemento [] = False
+verificaSpare elemento (cabeca:calda) = if elemento + cabeca == 10
                         then True
                         else False
 
@@ -45,3 +45,27 @@ verificaUltimosLances [a,b] = False
 verificaUltimosLances (pri:seg:ter:calda) = if calda == []
                                                 then True
                                                 else False
+
+imprimePontosPorRodada :: [Int] -> String
+imprimePontosPorRodada [] = ""
+imprimePontosPorRodada [a] = if a == 10
+                             then "X_|"
+                             else show a ++ "|"
+imprimePontosPorRodada (pri:seg:calda) = if verificaUltimosLances(pri:seg:calda)
+                                         then extraiPontuacaoDaRodada (pri:seg:calda) ++ extraiPontuacaoDaRodada calda ++ "|"
+                                         else 
+                                            if pri == 10
+                                            then extraiPontuacaoDaRodada (pri:seg:calda) ++ "_|" ++ imprimePontosPorRodada (seg:calda)
+                                            else extraiPontuacaoDaRodada (pri:seg:calda) ++ "|" ++ imprimePontosPorRodada calda
+
+extraiPontuacaoDaRodada :: [Int] -> String
+extraiPontuacaoDaRodada [] = ""
+extraiPontuacaoDaRodada [a] = if a == 10
+                             then "X"
+                             else show a
+extraiPontuacaoDaRodada (pri:seg:calda) = if pri == 10
+                                            then "X"
+                                            else if (verificaSpare pri (seg:calda))
+                                                then show pri ++ "/"
+                                                else show pri ++ " " ++ show seg
+
