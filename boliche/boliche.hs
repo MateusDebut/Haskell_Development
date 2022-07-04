@@ -1,11 +1,12 @@
 --Desenvolvido por Mateus dos Santos Ribeiro - N°USP: 11796997
 
+-- Tive problemas com a conversão da entrada pelo teclado =(
+-- Mas se alterar a lista dá para conferir que o resto está funcionando bem
+
 main = do
+    let listaDePontos = [1,4,4,5,6,4,5,5,10,0,1,7,3,6,4,10,2,8,6] --Alterar a lista para testar outra entrada
     print $ imprimePontosPorRodada listaDePontos 
     print $ sum $ calculaPontos listaDePontos
-
-
-listaDePontos = [1,4,4,5,6,4,5,5,10,0,1,7,3,6,4,10,2,8,6]
 
 verificaSpare :: Int -> [Int] -> Bool
 verificaSpare elemento [] = False
@@ -13,18 +14,12 @@ verificaSpare elemento (cabeca:calda) = if elemento + cabeca == 10
                         then True
                         else False
 
-extraiBonusStrike :: [Int] -> [Int]
-extraiBonusStrike [] = []
-extraiBonusStrike [a] = [a]
-extraiBonusStrike (pri:seg:ter:calda) = [pri + seg + ter]
-extraiBonusStrike (pri:seg:calda) = [pri + seg]
+extraiBonus :: [Int] -> [Int]
+extraiBonus [] = []
+extraiBonus [a] = [a]
+extraiBonus (pri:seg:ter:calda) = [pri + seg + ter]
+extraiBonus (pri:seg:calda) = [pri + seg]
 
-
-extraiBonusSpare :: [Int] -> [Int]
-extraiBonusSpare [] = []
-extraiBonusSpare [a] = [a]
-extraiBonusSpare(pri:seg:ter:calda) = [pri + seg + ter]
-extraiBonusSpare (pri:seg:calda) = [pri + seg] 
 
 calculaPontos :: [Int] -> [Int]
 calculaPontos [] = []
@@ -33,9 +28,9 @@ calculaPontos (pri:seg:calda) = if verificaUltimosLances(pri:seg:calda)
                                     then [pri + seg] ++ calculaPontos calda
                                     else 
                                         if pri >= 10
-                                        then extraiBonusStrike (pri:seg:calda) ++ calculaPontos (seg:calda)
+                                        then extraiBonus (pri:seg:calda) ++ calculaPontos (seg:calda)
                                         else if (verificaSpare pri (seg:calda))
-                                            then extraiBonusSpare (pri:seg:calda) ++ calculaPontos calda
+                                            then extraiBonus (pri:seg:calda) ++ calculaPontos calda
                                             else [pri + seg] ++ calculaPontos calda
 
 verificaUltimosLances :: [Int] -> Bool
